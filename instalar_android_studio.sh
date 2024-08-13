@@ -14,8 +14,37 @@ sudo mv android-studio /opt/android-studio
 
 # Agregar /opt/android-studio/bin a las variables de entorno
 echo "Agregando Android Studio a las variables de entorno..."
+echo 'export ANDROID_HOME=~/Android/Sdk' | sudo tee -a ~/.bashrc ~/.bash_profile ~/.zshrc
 echo 'export ANDROID_STUDIO_HOME=/opt/android-studio' | sudo tee -a ~/.bashrc ~/.bash_profile ~/.zshrc
 echo 'export PATH=$PATH:$ANDROID_STUDIO_HOME/bin' | sudo tee -a ~/.bashrc ~/.bash_profile ~/.zshrc
+echo 'export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools' | sudo tee -a ~/.bashrc ~/.bash_profile ~/.zshrc
+
+
+
+
+
+ # Instalar Android
+        andorid_home = os.path.expanduser('~/Android/Sdk')
+        click.echo("\t>> Instalar Android con snap")
+        commandsScrip("sudo snap install android-studio --classic")
+        click.echo("\t>> Instalar java con dnf")
+        commandsScrip("sudo dnf install java-11-openjdk")
+        zshrc.sobreEscribir([
+            # export JAVA_HOME=/ruta/a/jdk
+            f"export ANDROID_HOME={andorid_home}",
+            # export PATH=$PATH:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+            "export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools",
+        ])
+        
+        click.echo("""Flutter y Android Instalado Correctamente.
+Antes de iniciar revisa las configuracios de desarrollo de android para flutter, consultar el enlace https://docs.flutter.dev/get-started/install/linux/android?tab=later-start#configure-android-development     
+""");
+        commandsScrip("android-studio")
+
+
+
+
+
 
 # Crear archivo android-studio.desktop para poder acceder a Android Studio desde el menú de aplicaciones
 echo "Creando archivo android-studio.desktop..."
